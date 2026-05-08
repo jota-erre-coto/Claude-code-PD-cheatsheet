@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claude Code para Product Designers — Cheatsheet</title>
+    <style>
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Odisea Core */
+            --primary: #EA0558;
+            --primary-hover: #C2044B;
+            --primary-light: #FFEAF1;
+            --secondary: #0066CC;
+            --secondary-hover: #0052A3;
+            --success: #00B341;
+            --warning: #FF9500;
+            --error: #EA0558;
+
+            /* Semantic */
+            --foreground: #333333;
+            --foreground-light: #666666;
+            --foreground-lighter: #8C8C8C;
+            --background: #FFFFFF;
+            --surface: #F7F7F7;
+            --surface-muted: #F8F8F8;
+            --border: #EAEAEA;
+            --line: #EAEAEA;
+
+            /* Spacing Scale */
+            --spacing-2: 8px;
+            --spacing-3: 12px;
+            --spacing-4: 16px;
+            --spacing-6: 24px;
+            --spacing-8: 32px;
+            --spacing-12: 48px;
+
+            /* Border Radius */
+            --radius-default: 4px;
+            --radius-lg: 8px;
+            --radius-xl: 12px;
+            --radius-pill: 1000px;
+
+            /* Elevation */
+            --elevation-sm: 0 2px 8px 0 rgba(0,0,0,.10);
+            --elevation-md: 0 4px 16px 0 rgba(0,0,0,.10);
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500&display=swap');
+
+        html {
+            font-size: 16px;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background: var(--background);
+            color: var(--foreground);
+            line-height: 1.6;
+            padding: var(--spacing-8) var(--spacing-8) 0 var(--spacing-8);
+            font-weight: 400;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .section {
+            margin-bottom: var(--spacing-12);
+            padding: var(--spacing-8) 0;
+        }
+
+        .section:last-child {
+            margin-bottom: 0;
+        }
+
+        /* ─── Hero ────────────────────────────── */
+        .hero {
+            background: linear-gradient(140deg, #12122A 0%, #1E0A2E 55%, #2A0A1E 100%);
+            padding: 88px 0 80px;
+            position: relative;
+            overflow: hidden;
+            width: 100vw;
+            margin-left: calc(-50vw + 50%);
+            margin-top: calc(var(--spacing-8) * -1);
+            margin-bottom: var(--spacing-12);
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: -100px;
+            right: -60px;
+            width: 480px;
+            height: 480px;
+            background: radial-gradient(circle, rgba(234, 5, 88, 0.20) 0%, transparent 65%);
+            pointer-events: none;
+        }
+
+        .hero::after {
+            content: "";
+            position: absolute;
+            bottom: -80px;
+            left: -20px;
+            width: 320px;
+            height: 320px;
+            background: radial-gradient(circle, rgba(129, 37, 132, 0.14) 0%, transparent 65%);
+            pointer-events: none;
+        }
+
+        .hero h1.display {
+            font-size: 48px;
+            line-height: 56px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: #FFFFFF;
+            margin-bottom: var(--spacing-6);
+        }
+
+        .hero p {
+            color: rgba(255, 255, 255, 0.65);
+            font-size: 18px;
+            line-height: 28px;
+            max-width: 540px;
+            margin-top: 14px;
+        }
+
+        .hero .overline {
+            color: rgba(255, 255, 255, 0.35);
+            margin-bottom: 14px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(234, 5, 88, 0.12);
+            border: 1px solid rgba(234, 5, 88, 0.30);
+            border-radius: var(--radius-pill);
+            padding: 5px 14px;
+            margin-bottom: 20px;
+        }
+
+        .hero-badge span {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            color: #FF80B0;
+        }
+
+        .hero-badge .dot {
+            color: rgba(255, 255, 255, 0.18);
+        }
+
+        .activation-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 14px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.10);
+            border-radius: var(--radius-lg);
+            padding: 13px 20px;
+            margin-top: 30px;
+        }
+
+        .activation-pill .lbl {
+            font-size: 11px;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.35);
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+        }
+
+        .activation-pill code {
+            font-family: "JetBrains Mono", monospace;
+            font-size: 15px;
+            color: #FF80B0;
+            font-weight: 500;
+        }
+
+        .wrap {
+            max-width: 920px;
+            margin: 0 auto;
+            padding: 0 40px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .tabs {
+            display: flex;
+            gap: var(--spacing-4);
+            margin-bottom: var(--spacing-12);
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: var(--spacing-6);
+            background: var(--surface);
+            border-radius: var(--radius-xl);
+            position: sticky;
+            top: var(--spacing-4);
+            z-index: 100;
+        }
+
+        .tab-btn {
+            padding: var(--spacing-3) var(--spacing-6);
+            border: 1px solid transparent;
+            background: transparent;
+            color: var(--foreground-light);
+            cursor: pointer;
+            border-radius: var(--radius-lg);
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .tab-btn:hover {
+            color: var(--primary);
+            background: rgba(234, 5, 88, 0.06);
+        }
+
+        .tab-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            box-shadow: var(--elevation-md);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.2s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.2s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .section {
+            margin-bottom: 2.5rem;
+        }
+
+        .section-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: var(--spacing-6);
+            padding-bottom: var(--spacing-4);
+            border-bottom: 2px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-3);
+            letter-spacing: -0.3px;
+            line-height: 1.2;
+        }
+
+        .section-subtitle {
+            font-size: 0.75rem;
+            color: var(--foreground-lighter);
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            margin-top: calc(var(--spacing-4) * -1);
+            margin-bottom: var(--spacing-6);
+            font-weight: 600;
+        }
+
+        .command-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: var(--spacing-4);
+            margin-bottom: var(--spacing-8);
+        }
+
+        .command-card {
+            background: var(--background);
+            border: 1px solid var(--line);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-6);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            box-shadow: var(--elevation-sm);
+        }
+
+        .command-card:hover {
+            border-color: var(--primary);
+            box-shadow: var(--elevation-md);
+            transform: translateY(-2px);
+            background: rgba(234, 5, 88, 0.02);
+        }
+
+        .command-name {
+            font-family: "JetBrains Mono", monospace;
+            font-size: 0.95rem;
+            color: var(--primary);
+            font-weight: 500;
+            margin-bottom: var(--spacing-2);
+            word-break: break-word;
+            letter-spacing: 0.2px;
+        }
+
+        .command-desc {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-bottom: var(--spacing-3);
+            line-height: 1.6;
+            flex-grow: 1;
+        }
+
+        .command-alias {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            font-style: italic;
+            margin-top: var(--spacing-3);
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: var(--spacing-4);
+            right: var(--spacing-4);
+            padding: 4px 10px;
+            background: var(--secondary);
+            color: white;
+            border: none;
+            border-radius: var(--radius-default);
+            cursor: pointer;
+            font-size: 0.7rem;
+            font-weight: 600;
+            opacity: 0;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .command-card:hover .copy-btn {
+            opacity: 1;
+        }
+
+        .copy-btn:hover {
+            background: var(--secondary-hover);
+            box-shadow: 0 4px 12px rgba(0, 102, 204, 0.2);
+        }
+
+        .copy-btn:active {
+            transform: scale(0.95);
+        }
+
+        .prefix-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: var(--spacing-8);
+        }
+
+        .prefix-table th,
+        .prefix-table td {
+            padding: var(--spacing-4) var(--spacing-6);
+            text-align: left;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .prefix-table th {
+            background: var(--surface);
+            font-weight: 600;
+            color: var(--foreground-lighter);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+        }
+
+        .prefix-table tr:hover {
+            background: rgba(234, 5, 88, 0.04);
+        }
+
+        .prefix-table td {
+            font-size: 0.95rem;
+            color: var(--foreground-light);
+        }
+
+        .prefix-symbol {
+            font-family: "JetBrains Mono", monospace;
+            font-size: 1.1rem;
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        .prompt-box {
+            background: #14141F;
+            color: #E0E0F0;
+            padding: var(--spacing-6);
+            border-radius: var(--radius-xl);
+            font-family: "JetBrains Mono", monospace;
+            font-size: 0.9rem;
+            margin-bottom: var(--spacing-6);
+            border-left: 4px solid var(--primary);
+            overflow-x: auto;
+            line-height: 1.75;
+            box-shadow: var(--elevation-md);
+        }
+
+        .prompt-label {
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.35);
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            margin-bottom: var(--spacing-4);
+            display: block;
+            font-weight: 600;
+        }
+
+        .tip-box {
+            background: rgba(255, 149, 0, 0.06);
+            border-left: 3px solid var(--warning);
+            padding: var(--spacing-4) var(--spacing-6);
+            margin-bottom: var(--spacing-8);
+            border-radius: var(--radius-lg);
+            line-height: 1.6;
+        }
+
+        .tip-box strong {
+            color: var(--warning);
+            font-weight: 600;
+        }
+
+        .tip-box em {
+            color: var(--foreground);
+        }
+
+        .keyboard {
+            display: inline-block;
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: var(--radius-default);
+            padding: 2px 8px;
+            font-family: "JetBrains Mono", monospace;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--foreground);
+            margin: 0 var(--spacing-2);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5), 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: var(--spacing-12);
+            padding: var(--spacing-8) 0 var(--spacing-6);
+            border-top: 1px solid var(--border);
+            color: var(--foreground-lighter);
+            font-size: 0.85rem;
+        }
+
+        footer p {
+            margin-bottom: var(--spacing-2);
+        }
+
+        footer strong {
+            color: var(--foreground);
+            font-weight: 600;
+        }
+
+        footer {
+            background: var(--foreground);
+            padding: 30px 0;
+            text-align: center;
+            width: 100vw;
+            margin-left: calc(-50vw + 50%);
+            margin-top: 0;
+        }
+
+        footer p {
+            color: rgba(255, 255, 255, 0.35);
+            font-size: 12px;
+            line-height: 16px;
+            font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        }
+
+        footer strong {
+            color: rgba(255, 255, 255, 0.6);
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: var(--spacing-6);
+            }
+
+            header h1 {
+                font-size: 2rem;
+            }
+
+            header {
+                margin-bottom: var(--spacing-8);
+                padding-bottom: var(--spacing-6);
+            }
+
+            .command-grid {
+                grid-template-columns: 1fr;
+                gap: var(--spacing-4);
+            }
+
+            .tabs {
+                flex-direction: column;
+                gap: var(--spacing-3);
+                padding: var(--spacing-4);
+            }
+
+            .tab-btn {
+                width: 100%;
+            }
+
+            .section-title {
+                font-size: 1.25rem;
+            }
+
+            .copy-btn {
+                opacity: 1;
+            }
+        }
+
+        @media print {
+            * {
+                box-shadow: none !important;
+                border-color: #000 !important;
+            }
+
+            body {
+                background: white;
+                padding: var(--spacing-4);
+            }
+
+            .tab-content {
+                display: block !important;
+                page-break-after: always;
+            }
+
+            .tabs {
+                display: none;
+            }
+
+            .copy-btn {
+                display: none;
+            }
+
+            .command-card:hover {
+                box-shadow: none;
+                transform: none;
+            }
+
+            header {
+                margin-bottom: var(--spacing-6);
+                padding-bottom: var(--spacing-4);
+            }
+        }
+
+        .icon {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            margin-right: var(--spacing-2);
+        }
+    </style>
+</head>
+<body>
+    <section class="hero">
+        <div class="wrap">
+            <div class="hero-badge">
+                <span>Claude Code</span>
+                <span class="dot">·</span>
+                <span>Product Designers</span>
+                <span class="dot">·</span>
+                <span>Cheatsheet 2026</span>
+            </div>
+            <div class="overline">Civitatis · Design · Reference Guide</div>
+            <h1 class="display">Claude Code para<br>Product Designers</h1>
+            <p>Guía rápida de comandos — Diseño, prototipado y flujos diarios</p>
+        </div>
+    </section>
+
+    <div class="container" style="margin-top: 0;">
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('basics')">Básicos</button>
+            <button class="tab-btn" onclick="switchTab('daily')">Diarios</button>
+            <button class="tab-btn" onclick="switchTab('design')">Diseño</button>
+            <button class="tab-btn" onclick="switchTab('advanced')">Avanzado</button>
+        </div>
+
+        <!-- TAB 1: BASICS -->
+        <div id="basics" class="tab-content active">
+            <!-- Atajos de entrada -->
+            <div class="section">
+                <h2 class="section-title">⌨️ Atajos de Entrada del Prompt</h2>
+                <p class="section-subtitle">Prefijos · Input</p>
+                <table class="prefix-table">
+                    <thead>
+                        <tr>
+                            <th>Atajo</th>
+                            <th>Descripción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="prefix-symbol">!</span></td>
+                            <td><strong>Modo bash</strong> — Ejecuta el resto de la línea como un comando del shell</td>
+                        </tr>
+                        <tr>
+                            <td><span class="prefix-symbol">/</span></td>
+                            <td><strong>Comandos</strong> — Invoca un slash command de Claude Code</td>
+                        </tr>
+                        <tr>
+                            <td><span class="prefix-symbol">@</span></td>
+                            <td><strong>Rutas de archivo</strong> — Adjunta un archivo o carpeta al contexto del prompt</td>
+                        </tr>
+                        <tr>
+                            <td><span class="prefix-symbol">&</span></td>
+                            <td><strong>Background</strong> — Lanza la tarea en segundo plano para seguir trabajando</td>
+                        </tr>
+                        <tr>
+                            <td><span class="prefix-symbol">#</span></td>
+                            <td><strong>Comentario</strong> — Agrega información a memoria de forma rápida</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Setup -->
+            <div class="section">
+                <h2 class="section-title">🔧 Configuración Inicial</h2>
+                <p class="section-subtitle">Setup · Entorno</p>
+                <div class="command-grid">
+                    <div class="command-card">
+                        <button class="copy-btn" onclick="copyCommand('/init')">Copiar</button>
+                        <div class="command-name">/init</div>
+                        <div class="command-desc">Inicializa el proyecto creando la guía CLAUDE.md</div>
+                    </div>
+                    <div class="command-card">
+                        <button class="copy-btn" onclick="copyCommand('/login')">Copiar</button>
+                        <div class="command-name">/login</div>
+                        <div class="command-desc">Inicia sesión en tu cuenta de Anthropic</div>
+                    </div>
+                    <div class="command-card">
+                        <button class="copy-btn" onclick="copyCommand('/config')">Copiar</button>
+                        <div class="command-name">/config</div>
+                        <div class="command-desc">Abre la interfaz de Settings (tema, modelo, output style)</div>
+                    </div>
+                    <div class="command-card">
+                        <button class="copy-btn" onclick="copyCommand('/model')">Copiar</button>
+                        <div class="command-name">/model</div>
+                        <div class="command-desc">Selecciona o cambia el modelo de IA (Opus, Sonnet, Haiku)</div>
+                    </div>
+                    <div class="command-card">
+                        <button class="copy-btn" onclick="copyCommand('/theme')">Copiar</button>
+                        <div class="command-name">/theme</div>
+                        <div class="command-desc">Cambia el tema de color (light, dark, daltonized)</div>
+                    </div>
+                    <div class="command-card">
+                        <button class="copy-btn" onclick="copyCommand('/mcp')">Copiar</button>
+                        <div class="command-name">/mcp</div>
+                        <div class="command-desc">Gestiona conexiones a servidores MCP (Figma, Linear, Notion)</div>
+                    </div>
+                    <div class="command-card">
+                        <button class="copy-btn" onclick="copyCommand('/help')">Copiar</button>
+                        <div class="command-name">/help</div>
+                        <div class="command-desc">Muestra ayuda y los comandos disponibles</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 2: DAILY -->
+        <div id="daily" class="tab-content">
+            <div class="section">
+                <h2 class="section-title">📋 Flujo de Trabajo Diario</h2>
+                <p class="section-subtitle">Contexto · Sesión · Memoria</p>
+
+                <div class="tip-box">
+                    <strong>💡 Consejo:</strong> Usa <span class="keyboard">/plan</span> antes de tocar código. Usa <span class="keyboard">/memory</span> para guardar contexto de tu proyecto.
+                </div>
+
+                <div class="command-grid">
+                    <div class="command-card">
+                        <button class="copy-btn" onclick="copyCommand('/plan')">Copiar</button>
+                        <div class="command-name">/plan</div>
+                        <div class="command-desc">Entra en modo planificación — Claude propone sin tocar archivos. Perfecto antes de empezar</div>
+                    </div>
+                    <div class="command-card">
+                        <button class="copy-btn" onclick="copyCommand('/memory')">Copiar</button>
+                        <div class="command-name">/memory</div>
+                        <div class="command-desc">Edita archivos CLAUDE.md y gestiona memoria automática del proyecto</div>
+                    </div>
+                    <div class="command-card">
+                        <button class="copy-btn" onclick="copyCommand('/context')">Copiar</button>
+                        <div class="command-name">/context</div>
+                        <div class="command-desc">Visualiza el uso actual del contexto en una grilla de colores</div>
+                    </div>
+                    <div class="command-card">
+                        <button class="copy-btn" onclick="copyCommand('/compact')">Copiar</button>
+                        <div class="command-name">/compact</div>
+                        <div class="command-desc">Libera contexto resumiendo la conversación — mantiene lo esencial</div>
+                    </div>
+                    <div class="command-card">
+                        <button class="copy-btn" onclick="copyCommand('/resume')">Copiar</button>
+                        <div class="command-name">/resume</div>
+                        <div class="command-desc">Reanuda una conversación anterior por ID o nombre</div>
+                    </div>
+                    <div class="command-card">
+                        <button class="copy-btn" onclick="copyCommand('/clear')">Copiar</button>
+                        <div class="command-name">/clear</div>
+                        <div class="command-desc">Inicia una conversación nueva con contexto vacío</div>
+                    </div>
+                    <div class="command-card">
+                        <button class="copy-btn" onclick="copyCommand('/copy')">Copiar</button>
+                        <div class="command-name">/copy</div>
+                        <div class="command-desc">Copia la última respuesta del asistente al portapapeles</div>
+                    </div>
+                    <div class="command-card">
+                        <button class="copy-btn" onclick="copyCommand('/export')">Copiar</button>
+                        <div class="command-name">/export</div>
+                        <div class="command-desc">Exporta la conversación actual como texto plano</div>
+                    </div>
+                    <div class="command-card">
+                        <button class="copy-btn" onclick="copyCommand('/focus')">Copiar</button>
+                        <div class="command-name">/focus</div>
+                        <div class="command-desc">Activa vista enfocada (último prompt + diff resumido)</div>
+                    </div>
+                    <div class="command-card">
+                        <button class="copy-btn" onclick="copyCommand('/skills')">Copiar</button>
+                        <div class="command-name">/skills</div>
+                        <div class="command-desc">Lista las skills disponibles — automatización de tareas repetidas</div>
+                    </div>
+                    <div class="command-card">
+                        <button class="copy-btn" onclick="copyCommand('/diff')">Copiar</button>
+                        <div class="command-name">/diff</div>
+                        <div class="command-desc">Abre un visor interactivo de cambios realizados</div>
+                    </div>
+                    <div class="command-card">
+                        <button class="copy-btn" onclick="copyCommand('/effort')">Copiar</button>
+                        <div class="command-name">/effort</div>
+                        <div class="command-desc">Ajusta el nivel de esfuerzo (low/medium/high/xhigh/max)</div>
+                    </div>
+                    <div class="command-card">
+                        <button class="copy-btn" onclick="copyCommand('/fast')">Copiar</button>
+                        <div class="command-name">/fast</div>
+                        <div class="command-desc">Activa modo rápido (velocidad sobre profundidad)</div>
+                    </div>
+                    <div class="command-card">
+                        <button class="copy-btn" onclick="copyCommand('/recap')">Copiar</button>
+                        <div class="command-name">/recap</div>
+                        <div class="command-desc">Genera un resumen breve de la sesión actual bajo demanda</div>
+                    </div>
+                    <div class="command-card">
+                        <button class="copy-btn" onclick="copyCommand('/btw')">Copiar</button>
+                        <div class="command-name">/btw</div>
+                        <div class="command-desc">Pregunta lateral sin afectar la conversación principal</div>
+                        <div class="command-alias">Perfecto para dudas rápidas sin perder contexto</div>
+                    </div>
+                    <div class="command-card">
+                        <button class="copy-btn" onclick="copyCommand('/voice')">Copiar</button>
+                        <div class="command-name">/voice</div>
+                        <div class="command-desc">Activa dictado por voz (modos hold, tap u off)</div>
+                    </div>
+                    <div class="command-card">
+                        <button class="copy-btn" onclick="copyCommand('/rewind')">Copiar</button>
+                        <div class="command-name">/rewind</div>
+                        <div class="command-desc">Vuelve la conversación o código a un punto anterior</div>
+                        <div class="command-alias">Salva cuando te arrepientes de algo</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 3: DESIGN -->
+        <div id="design" class="tab-content">
+            <div class="section">
+                <h2 class="section-title">🎨 Comandos para Diseño</h2>
+                <p class="section-subtitle">Figma · Auditoría · Componentes · Prototipado</p>
+
+                <div class="tip-box">
+                    <strong>🔗 MCPs esenciales:</strong> Conecta <strong>Figma MCP</strong>, <strong>Linear MCP</strong> y <strong>Notion MCP</strong> con <span class="keyboard">/mcp</span> para acceso directo a tus diseños, tickets y briefs.
+                </div>
+
+                <div class="command-grid">
+                    <div class="command-card">
+                        <button class="copy-btn" onclick="copyCommand('@tokens.css')">Copiar</button>
+                        <div class="command-name">@tokens.css</div>
+                        <div class="command-desc">Adjunta tus design tokens como contexto del sistema</div>
+                        <div class="command-alias">Usa: <span class="keyboard">@ruta/archivo</span> para referenciar</div>
+                    </div>
+                    <div class="command-card">
+                        <button class="copy-btn" onclick="copyCommand('/add-dir')">Copiar</button>
+                        <div class="command-name">/add-dir &lt;ruta&gt;</div>
+                        <div class="command-desc">Agrega un directorio al acceso de archivos de la sesión</div>
+                    </div>
+                    <div class="command-card">
+                        <button class="copy-btn" onclick="copyCommand('/review')">Copiar</button>
+                        <div class="command-name">/review [PR]</div>
+                        <div class="command-desc">Revisa cambios e implementaciones de componentes</div>
+                    </div>
+                    <div class="command-card">
+                        <button class="copy-btn" onclick="copyCommand('/simplify')">Copiar</button>
+                        <div class="command-name">/simplify</div>
+                        <div class="command-desc">Revisa y arregla archivos modificados (calidad, eficiencia)</div>
+                    </div>
+                    <div class="command-card">
+                        <button class="copy-btn" onclick="copyCommand('/security-review')">Copiar</button>
+                        <div class="command-name">/security-review</div>
+                        <div class="command-desc">Analiza cambios buscando vulnerabilidades de accesibilidad</div>
+                    </div>
+                </div>
+
+                <h3 class="section-title" style="margin-top: 2rem; font-size: 1.2rem;">📸 Ejemplos de Prompts Listos</h3>
+
+                <div class="prompt-box">
+                    <span class="prompt-label">Auditoría A11y</span>
+                    Revisa este componente y lista todos los problemas de accesibilidad con WCAG 2.2, ordenados por severidad.
+                </div>
+
+                <div class="prompt-box">
+                    <span class="prompt-label">Spec de Componente</span>
+                    A partir de este diseño genera una spec detallada: estados, props, tokens de color y tipografía usados.
+                </div>
+
+                <div class="prompt-box">
+                    <span class="prompt-label">UX Copy Review</span>
+                    Reescribe estos microtextos para que sean más claros y accionables. Tono: cercano, directo, sin tecnicismos.
+                </div>
+
+                <div class="prompt-box">
+                    <span class="prompt-label">Handoff a Dev</span>
+                    Genera las notas de handoff para este flujo: comportamientos, edge cases, animaciones y responsive breakpoints.
+                </div>
+
+                <div class="prompt-box">
+                    <span class="prompt-label">Consistencia DS</span>
+                    Compara este archivo con los tokens del design system y lista valores hardcoded que deberían ser variables.
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 4: ADVANCED -->
+        <div id="advanced" class="tab-content">
+            <div class="section">
+                <h2 class="section-title">⚡ Avanzado</h2>
+                <p class="section-subtitle">Razonamiento · Automatización · MCPs</p>
+
+                <h3 style="font-size: 1.1rem; color: var(--text); margin: 1.5rem 0 1rem 0;">Modos de Razonamiento</h3>
+                <div class="command-grid">
+                    <div class="command-card">
+                        <div class="command-name">think</div>
+                        <div class="command-desc">Razonamiento estándar (por defecto)</div>
+                        <div class="command-alias">Uso: <span class="keyboard">think: tu prompt aquí</span></div>
+                    </div>
+                    <div class="command-card">
+                        <div class="command-name">think hard</div>
+                        <div class="command-desc">Más deliberado — para decisiones de arquitectura</div>
+                    </div>
+                    <div class="command-card">
+                        <div class="command-name">think harder</div>
+                        <div class="command-desc">Profundo — para sistemas complejos o trade-offs</div>
+                    </div>
+                </div>
+
+                <h3 style="font-size: 1.1rem; color: var(--text); margin: 1.5rem 0 1rem 0;">Automatización y Loops</h3>
+                <div class="command-grid">
+                    <div class="command-card">
+                        <button class="copy-btn" onclick="copyCommand('/loop')">Copiar</button>
+                        <div class="command-name">/loop &lt;intervalo&gt;</div>
+                        <div class="command-desc">Ejecuta un prompt repetidamente mientras dura la sesión</div>
+                        <div class="command-alias">Ejemplo: <span class="keyboard">/loop 5m /audit</span></div>
+                    </div>
+                    <div class="command-card">
+                        <button class="copy-btn" onclick="copyCommand('/schedule')">Copiar</button>
+                        <div class="command-name">/schedule</div>
+                        <div class="command-desc">Crea, edita o ejecuta routines programadas</div>
+                    </div>
+                    <div class="command-card">
+                        <button class="copy-btn" onclick="copyCommand('/agents')">Copiar</button>
+                        <div class="command-name">/agents</div>
+                        <div class="command-desc">Gestiona configuraciones de subagentes paralelos</div>
+                    </div>
+                </div>
+
+                <h3 style="font-size: 1.1rem; color: var(--text); margin: 1.5rem 0 1rem 0;">MCPs para Diseño</h3>
+                <div class="tip-box">
+                    <strong>Figma MCP:</strong> Acceso a capas, variables y screenshots desde Figma sin tocar la app<br>
+                    <strong>Linear MCP:</strong> Consulta tickets activos y estado del sprint<br>
+                    <strong>Notion MCP:</strong> Leer/escribir docs de diseño, briefs y specs<br>
+                    <strong>Playwright:</strong> Claude navega el navegador para testear UI en vivo
+                </div>
+
+                <h3 style="font-size: 1.1rem; color: var(--text); margin: 1.5rem 0 1rem 0;">Diagnóstico y Costos</h3>
+                <div class="command-grid">
+                    <div class="command-card">
+                        <button class="copy-btn" onclick="copyCommand('/status')">Copiar</button>
+                        <div class="command-name">/status</div>
+                        <div class="command-desc">Abre Settings con versión, modelo, cuenta y conectividad</div>
+                    </div>
+                    <div class="command-card">
+                        <button class="copy-btn" onclick="copyCommand('/usage')">Copiar</button>
+                        <div class="command-name">/usage</div>
+                        <div class="command-desc">Costo de la sesión, límites del plan y estadísticas</div>
+                    </div>
+                    <div class="command-card">
+                        <button class="copy-btn" onclick="copyCommand('/rewind')">Copiar</button>
+                        <div class="command-name">/rewind</div>
+                        <div class="command-desc">Vuelve la conversación o el código a un punto anterior</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p><strong>Claude Code para Product Designers</strong> &nbsp;·&nbsp; Civitatis · Design System · 2026</p>
+    </footer>
+
+    <script>
+        function switchTab(tabName) {
+            // Hide all tabs
+            const tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => tab.classList.remove('active'));
+
+            // Remove active class from all buttons
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+
+            // Show selected tab
+            document.getElementById(tabName).classList.add('active');
+
+            // Add active class to clicked button
+            event.target.classList.add('active');
+        }
+
+        function copyCommand(command) {
+            const textarea = document.createElement('textarea');
+            textarea.value = command;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+
+            // Show feedback
+            const btn = event.target;
+            const originalText = btn.textContent;
+            btn.textContent = '✓ Copiado';
+            setTimeout(() => {
+                btn.textContent = originalText;
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
