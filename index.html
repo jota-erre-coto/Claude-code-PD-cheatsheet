@@ -589,15 +589,15 @@
             </div>
             <div class="overline">Civitatis · Design · Reference Guide</div>
             <h1 class="display">Claude Code para<br>Product Designers</h1>
-            <p>Guía rápida de comandos — Diseño, prototipado y flujos diarios</p>
+            <p>Todos los comandos que necesitas para diseñar, prototipar e iterar</p>
         </div>
     </section>
 
     <div class="container" style="margin-top: 0;">
         <div class="tabs">
-            <button class="tab-btn active" onclick="switchTab('basics')">Básicos</button>
-            <button class="tab-btn" onclick="switchTab('daily')">Diarios</button>
-            <button class="tab-btn" onclick="switchTab('design')">Diseño</button>
+            <button class="tab-btn active" onclick="switchTab('basics')">Primeros pasos</button>
+            <button class="tab-btn" onclick="switchTab('daily')">Sesión</button>
+            <button class="tab-btn" onclick="switchTab('design')">Herramientas de diseño</button>
             <button class="tab-btn" onclick="switchTab('advanced')">Avanzado</button>
         </div>
 
@@ -647,7 +647,7 @@
                     <div class="command-card">
                         <button class="copy-btn" onclick="copyCommand('/init')">Copiar</button>
                         <div class="command-name">/init</div>
-                        <div class="command-desc">Inicializa el proyecto creando la guía CLAUDE.md</div>
+                        <div class="command-desc">Configura tu proyecto — crea archivos de contexto</div>
                     </div>
                     <div class="command-card">
                         <button class="copy-btn" onclick="copyCommand('/login')">Copiar</button>
@@ -657,7 +657,7 @@
                     <div class="command-card">
                         <button class="copy-btn" onclick="copyCommand('/config')">Copiar</button>
                         <div class="command-name">/config</div>
-                        <div class="command-desc">Abre la interfaz de Settings (tema, modelo, output style)</div>
+                        <div class="command-desc">Ajusta preferencias: tema, modelo y opciones de salida</div>
                     </div>
                     <div class="command-card">
                         <button class="copy-btn" onclick="copyCommand('/model')">Copiar</button>
@@ -672,7 +672,7 @@
                     <div class="command-card">
                         <button class="copy-btn" onclick="copyCommand('/mcp')">Copiar</button>
                         <div class="command-name">/mcp</div>
-                        <div class="command-desc">Gestiona conexiones a servidores MCP (Figma, Linear, Notion)</div>
+                        <div class="command-desc">Conecta Figma, Linear, Notion y otras herramientas</div>
                     </div>
                     <div class="command-card">
                         <button class="copy-btn" onclick="copyCommand('/help')">Copiar</button>
@@ -690,7 +690,7 @@
                 <p class="section-subtitle">Contexto · Sesión · Memoria</p>
 
                 <div class="tip-box">
-                    <strong>💡 Consejo:</strong> Usa <span class="keyboard">/plan</span> antes de tocar código. Usa <span class="keyboard">/memory</span> para guardar contexto de tu proyecto.
+                    <strong>💡 Pro tip:</strong> Usa <span class="keyboard">/plan</span> para explorar opciones sin tocar código. Luego <span class="keyboard">/memory</span> para que Claude no olvide tu contexto.
                 </div>
 
                 <div class="command-grid">
@@ -702,12 +702,12 @@
                     <div class="command-card">
                         <button class="copy-btn" onclick="copyCommand('/memory')">Copiar</button>
                         <div class="command-name">/memory</div>
-                        <div class="command-desc">Edita archivos CLAUDE.md y gestiona memoria automática del proyecto</div>
+                        <div class="command-desc">Crea y actualiza notas para que Claude recuerde tu proyecto</div>
                     </div>
                     <div class="command-card">
                         <button class="copy-btn" onclick="copyCommand('/context')">Copiar</button>
                         <div class="command-name">/context</div>
-                        <div class="command-desc">Visualiza el uso actual del contexto en una grilla de colores</div>
+                        <div class="command-desc">Ve cuánto contexto usas y cuánto te queda disponible</div>
                     </div>
                     <div class="command-card">
                         <button class="copy-btn" onclick="copyCommand('/compact')">Copiar</button>
@@ -737,7 +737,7 @@
                     <div class="command-card">
                         <button class="copy-btn" onclick="copyCommand('/focus')">Copiar</button>
                         <div class="command-name">/focus</div>
-                        <div class="command-desc">Activa vista enfocada (último prompt + diff resumido)</div>
+                        <div class="command-desc">Mira solo lo importante: tu último prompt y cambios clave</div>
                     </div>
                     <div class="command-card">
                         <button class="copy-btn" onclick="copyCommand('/skills')">Copiar</button>
@@ -792,7 +792,7 @@
                 <p class="section-subtitle">Figma · Auditoría · Componentes · Prototipado</p>
 
                 <div class="tip-box">
-                    <strong>🔗 MCPs esenciales:</strong> Conecta <strong>Figma MCP</strong>, <strong>Linear MCP</strong> y <strong>Notion MCP</strong> con <span class="keyboard">/mcp</span> para acceso directo a tus diseños, tickets y briefs.
+                    <strong>🔗 Pro tip:</strong> Conecta Figma, Linear y Notion con <span class="keyboard">/mcp</span> para que Claude acceda directamente a tus diseños, tickets y briefs.
                 </div>
 
                 <div class="command-grid">
@@ -820,7 +820,7 @@
                     <div class="command-card">
                         <button class="copy-btn" onclick="copyCommand('/security-review')">Copiar</button>
                         <div class="command-name">/security-review</div>
-                        <div class="command-desc">Analiza cambios buscando vulnerabilidades de accesibilidad</div>
+                        <div class="command-desc">Revisa accesibilidad: WCAG 2.2, contraste, navegación</div>
                     </div>
                 </div>
 
@@ -965,4 +965,4 @@
         }
     </script>
 </body>
-</html>test
+</html>
